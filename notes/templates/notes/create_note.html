@@ -1,0 +1,21 @@
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova beleška</title>
+</head>
+<body>
+
+    <h1>Kreiranje nove beleške</h1>
+
+    <form method="POST" action="{% url 'create_note' %}">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Sačuvaj belešku</button>
+    </form>
+
+    <a href="{% url 'notes_list' %}">Nazad na beleške</a>
+
+</body>
+</html>

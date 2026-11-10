@@ -1,0 +1,21 @@
+</head>
+<body>
+
+    <h1>{{ note.title }}</h1>
+
+    <p>{{ note.content }}</p>
+
+    <p>Kategorija: {{ note.category.name }}</p>
+
+    <small>
+        Kreirano: {{ note.created_at }}
+    </small>
+
+    <hr>
+
+    <a href="{% url 'notes_list' %}">
+        Nazad na beleške
+    </a>
+
+</body>
+</html>

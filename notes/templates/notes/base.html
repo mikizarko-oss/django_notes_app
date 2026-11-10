@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Moje beleške{% endblock %}</title>
+</head>
+<body>
+
+    <nav>
+        <a href="{% url 'notes_list' %}">Moje beleške</a>
+
+        <a href="{% url 'create_note' %}">Nova beleška</a>
+
+        {% if request.user.is_authenticated %}
+            <span>
+                Prijavljen: {{ request.user.username }}
+            </span>
+
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Odjavi se</button>
+            </form>
+        {% endif %}
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

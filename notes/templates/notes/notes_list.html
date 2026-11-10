@@ -1,0 +1,64 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}Moje beleške{% endblock %}
+
+{% block content %}
+
+<h1>Moje beleške</h1>
+    <h2>Broj beleški po kategorijama</h2>
+
+    <ul>
+        {% for category in category_counts %}
+            <li>
+                {{ category.name }} - {{ category.notes_count }} beleški
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form method="GET">
+
+    <label for="category">Filtriraj po kategoriji:</label>
+
+    <select name="category" id="category">
+
+        <option value="">Sve kategorije</option>
+
+        {% for category in categories %}
+            <option
+                value="{{ category.id }}"
+                {% if selected_category_id == category.id %}selected{% endif %}
+            >
+                {{ category.name }}
+            </option>
+        {% endfor %}
+
+    </select>
+
+    <button type="submit">Filtriraj</button>
+
+</form>
+
+{% if notes %}
+    {% for note in notes %}
+        <div>
+            <h2>
+                <a href="{% url 'note_detail' note.id %}">
+                    {{ note.title }}
+                </a>
+            </h2>
+
+            <p>{{ note.content }}</p>
+            <p>Kategorija: {{ note.category.name }}</p>
+            <small>{{ note.created_at }}</small>
+        <form method="POST" action="{% url 'delete_note' note.id %}">
+            {% csrf_token %}
+            <button type="submit">Obriši belešku</button>
+        </form>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>Još uvek nemaš nijednu belešku.</p>
+{% endif %}
+
+{% endblock %}
